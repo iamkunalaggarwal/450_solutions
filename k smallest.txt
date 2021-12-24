@@ -1,0 +1,48 @@
+
+class Solution{
+    public static int kthSmallest(int[] arr, int l, int r, int k) 
+    { 
+        Arrays.sort(arr);
+        return arr[k - 1];
+    } 
+}
+
+//reddy sir method
+class Solution{
+    public static int kthSmallest(int[] arr, int l, int r, int k) 
+    { 
+        if(k>0 && k<=r-l+1){
+            int x;
+            x = partition(arr,l,r);
+            if(x-l==k-1){
+                return arr[x];
+            }
+            if(x-l>k-1){
+                return kthSmallest(arr,l,x-1,k);
+            }
+            else{
+                return kthSmallest(arr,x+1,r,k-x+l-1);
+            }
+        }
+        else{
+            return 0;
+        }
+    } 
+    public static int partition(int[] arr,int l,int r)
+    {
+        int k = l;
+        for (int i = l; i<r; i++) {
+            if (arr[i] <= arr[r]) {
+                int temp = arr[k];
+                arr[k] = arr[i];
+                arr[i] = temp;
+                k++;
+            }
+        }
+        int temp = arr[k];
+        arr[k] = arr[r];
+        arr[r] = temp;
+  
+        return k;
+    }
+}
